@@ -3,18 +3,12 @@ name: Build and Push Docker Image
 on:
   push:
     branches: [ main, master ]
-    paths:
-      - 'strapi4/**'
-      - '.github/workflows/docker-build.yml'
   pull_request:
     branches: [ main, master ]
-    paths:
-      - 'strapi4/**'
-      - '.github/workflows/docker-build.yml'
 
 env:
   REGISTRY: ghcr.io
-  IMAGE_NAME: weareimpress/sunrice-strapi4/strapi
+  IMAGE_NAME: ${{ github.repository }}
 
 jobs:
   build:
@@ -51,9 +45,9 @@ jobs:
       - name: Build and push Docker image
         uses: docker/build-push-action@v5
         with:
-          context: ./strapi4
+          context: .
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=gha
-          cache-to: type=gha,mode=max 
+          cache-to: type=gha,mode=max

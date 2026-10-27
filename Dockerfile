@@ -1,3 +1,5 @@
-FROM node:22-bullseye
+FROM node:22-bookworm
 
-RUN apt update && apt install -y libvips-dev
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends libvips-dev \
+    && rm -rf /var/lib/apt/lists/*
